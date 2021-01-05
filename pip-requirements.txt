@@ -1,0 +1,4 @@
+git+https://github.com/SENERGY-Platform/import-lib.git@ebee20c84b5cb7832ce390b80de49ac02d72640f
+schedule
+requests
+rfc3339
