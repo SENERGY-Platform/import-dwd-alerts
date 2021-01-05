@@ -31,8 +31,10 @@ class Alert(object):
         self.warnCellId = warnCellId
         self.regionName = regionName
         self.__end = end
-        if end is not None and isinstance(end, datetime):
+        if isinstance(end, datetime):
             self.__end = rfc3339.format(end, utc=True)
+        elif end is None:
+            self.__end = ''
         if isinstance(start, datetime):
             self.__start = rfc3339.format(start, utc=True)
         else:
@@ -45,8 +47,14 @@ class Alert(object):
         self.headline = headline
         self.instruction = instruction
         self.stateShort = stateShort
-        self.altitudeStart = altitudeStart
-        self.altitudeEnd = altitudeEnd
+        if altitudeStart is None:
+            self.altitudeStart = 0
+        else:
+            self.altitudeStart = altitudeStart
+        if altitudeEnd is None:
+            self.altitudeEnd = 3000
+        else:
+            self.altitudeEnd = altitudeEnd
         self.urgency = urgency
 
     @property
@@ -88,10 +96,12 @@ class Alert(object):
 
     def end_dt(self) -> datetime:
         '''
-        Get the end property as datetime
+        Get the end property as datetime. If not defined, an arbitrarily high value will be returned.
 
         :return: end property as datetime
         '''
+        if self.__end == '':
+            return datetime.fromtimestamp(99999999999, timezone.utc)
         return datetime.strptime(self.__end, "%Y-%m-%dT%H:%M:%SZ").astimezone(timezone.utc)
 
 
