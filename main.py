@@ -20,7 +20,7 @@ from import_lib.import_lib import ImportLib, get_logger
 from lib.alert.AlertImport import AlertImport
 
 if __name__ == '__main__':
-    lib = ImportLib()
+    lib = ImportLib("github.com/SENERGY-Platform/import-dwd-alerts")
     logger = get_logger(__name__)
     alertImport = AlertImport(lib)
 
